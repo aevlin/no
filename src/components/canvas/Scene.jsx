@@ -77,7 +77,8 @@ function CameraController({ section, introPhase, navDuration }) {
     if (introPhase !== 'done') return;
 
     const targetZ = SECTION_Z[section] + CAMERA_OFFSET;
-    const yOff    = [0, -0.08, 0.10, -0.14, 0][section] ?? 0;
+    // index 0: Landing, index 1: About, index 2: Services, index 3: Team, index 4: Contact
+    const yOff    = [0, -0.08, 0.0, -0.14, 0][section] ?? 0;
     targetYRef.current = yOff;
 
     if (tween.current) tween.current.kill();

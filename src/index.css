@@ -1,15 +1,17 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Space+Grotesk:wght@700&family=Michroma&display=swap');
 
 /* ── Typography ─────────────────────────────────────────── */
 @font-face {
   font-family: 'Nullshock';
-  /* Fallback to Orbitron which ships via Google Fonts */
   src: local('Nullshock');
   font-weight: 900;
 }
 
 :root {
   --font-display: 'Orbitron', 'Nullshock', monospace;
+  --font-hero: 'Syncopate', sans-serif;
+  --font-hero-alt: 'Michroma', sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
   --col-bg: #050505;
   --col-surface: rgba(10, 10, 12, 0.55);
@@ -19,11 +21,19 @@
   --col-faint: rgba(255, 255, 255, 0.12);
 }
 
-*, *::before, *::after { box-sizing: border-box; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
-html, body, #root {
-  margin: 0; padding: 0;
-  width: 100%; height: 100%;
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
   background: var(--col-bg);
   color: var(--col-text);
   font-family: var(--font-body);
@@ -42,136 +52,208 @@ html, body, #root {
 
 /* ── Nav HUD ─────────────────────────────────────────────── */
 .hud-root {
-  position: fixed; inset: 0;
+  position: fixed;
+  inset: 0;
   pointer-events: none;
   z-index: 100;
 }
 
 .hud-logo {
   position: absolute;
-  top: 32px; left: 48px;
+  top: 32px;
+  left: 48px;
   font-family: var(--font-display);
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.3em;
-  color: rgba(255,255,255,0.9);
+  color: rgba(255, 255, 255, 0.9);
   pointer-events: none;
 }
 
-.hud-tagline { display: none; } /* replaced by hud-topright */
+.hud-tagline {
+  display: none;
+}
+
+/* replaced by hud-topright */
 
 /* ── Top-right: social icons + menu ─────────────────────── */
 .hud-topright {
   position: absolute;
-  top: 28px; right: 44px;
-  display: flex; align-items: center; gap: 12px;
+  top: 28px;
+  right: 44px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
   pointer-events: all;
   z-index: 101;
 }
 
 .hud-social-btn {
-  display: flex; align-items: center; justify-content: center;
-  width: 17px; height: 17px;
-  color: rgba(255,255,255,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 17px;
+  height: 17px;
+  color: rgba(255, 255, 255, 0.55);
   text-decoration: none;
   transition: color 0.22s ease, filter 0.22s ease, transform 0.22s ease;
 }
-.hud-social-btn svg { width: 100%; height: 100%; }
+
+.hud-social-btn svg {
+  width: 100%;
+  height: 100%;
+}
+
 .hud-social-btn:hover {
-  color: rgba(255,255,255,0.72);
-  filter: drop-shadow(0 0 4px rgba(255,255,255,0.25));
+  color: rgba(255, 255, 255, 0.72);
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.25));
 }
 
 /* ── Hamburger → X button ────────────────────────────────── */
 .hud-menu-btn {
-  background: none; border: none; cursor: pointer;
-  width: 22px; height: 14px;
-  display: flex; flex-direction: column;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 22px;
+  height: 14px;
+  display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  padding: 0; margin-left: 4px;
+  padding: 0;
+  margin-left: 4px;
   pointer-events: all;
 }
+
 .hud-menu-btn span {
-  display: block; height: 1px; width: 100%;
-  background: rgba(255,255,255,0.32);
-  transition: transform 0.38s cubic-bezier(0.25,0.46,0.45,0.94),
-              opacity  0.3s ease,
-              background 0.25s ease;
+  display: block;
+  height: 1px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.32);
+  transition: transform 0.38s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    opacity 0.3s ease,
+    background 0.25s ease;
   transform-origin: center;
 }
-.hud-menu-btn:hover span { background: rgba(255,255,255,0.75); }
+
+.hud-menu-btn:hover span {
+  background: rgba(255, 255, 255, 0.75);
+}
+
 /* X state */
-.hud-menu-btn.open span:nth-child(1) { transform: translateY(6.5px)  rotate(45deg);  }
-.hud-menu-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-.hud-menu-btn.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+.hud-menu-btn.open span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+
+.hud-menu-btn.open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.hud-menu-btn.open span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
 
 /* ── Slide-in menu panel ─────────────────────────────────── */
 .hud-menu-panel {
   position: fixed;
-  top: 0; right: 0;
-  width: 280px; height: 100vh;
-  background: rgba(4,4,5,0.94);
+  top: 0;
+  right: 0;
+  width: 280px;
+  height: 100vh;
+  background: rgba(4, 4, 5, 0.94);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-left: 1px solid rgba(255,255,255,0.055);
+  border-left: 1px solid rgba(255, 255, 255, 0.055);
   z-index: 95;
   transform: translateX(100%);
-  transition: transform 0.52s cubic-bezier(0.25,0.46,0.45,0.94);
+  transition: transform 0.52s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   pointer-events: none;
 }
+
 .hud-menu-panel.open {
   transform: translateX(0);
   pointer-events: all;
 }
+
 .hud-menu-panel-inner {
-  display: flex; flex-direction: column;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  height: 100%; padding: 0 44px;
+  height: 100%;
+  padding: 0 44px;
 }
+
 .hud-menu-eyebrow {
   font-family: var(--font-body);
-  font-size: 7.5px; letter-spacing: 0.4em;
-  color: rgba(255,255,255,0.15);
+  font-size: 7.5px;
+  letter-spacing: 0.4em;
+  color: rgba(255, 255, 255, 0.15);
   text-transform: uppercase;
   margin-bottom: 28px;
 }
+
 .hud-menu-item {
-  display: flex; align-items: center; gap: 14px;
-  background: none; border: none; cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: none;
+  border: none;
+  cursor: pointer;
   padding: 13px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  width: 100%; text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  width: 100%;
+  text-align: left;
   position: relative;
-  opacity: 0; transform: translateX(18px);
+  opacity: 0;
+  transform: translateX(18px);
   transition: opacity 0.38s ease, transform 0.38s ease;
 }
+
 .hud-menu-panel.open .hud-menu-item {
-  opacity: 1; transform: translateX(0);
+  opacity: 1;
+  transform: translateX(0);
 }
+
 .hud-menu-num {
   font-family: var(--font-display);
-  font-size: 8px; letter-spacing: 0.16em;
-  color: rgba(255,255,255,0.16);
-  width: 20px; flex-shrink: 0;
+  font-size: 8px;
+  letter-spacing: 0.16em;
+  color: rgba(255, 255, 255, 0.16);
+  width: 20px;
+  flex-shrink: 0;
 }
+
 .hud-menu-label {
   font-family: var(--font-display);
-  font-size: 13.5px; font-weight: 600; letter-spacing: 0.1em;
-  color: rgba(255,255,255,0.38);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.38);
   text-transform: uppercase;
   transition: color 0.25s ease;
 }
-.hud-menu-item:hover .hud-menu-label { color: rgba(255,255,255,0.78); }
-.hud-menu-item.active .hud-menu-label { color: rgba(255,255,255,0.92); }
+
+.hud-menu-item:hover .hud-menu-label {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.hud-menu-item.active .hud-menu-label {
+  color: rgba(255, 255, 255, 0.92);
+}
+
 .hud-menu-active-dot {
-  position: absolute; right: 0;
-  width: 4px; height: 4px; border-radius: 50%;
-  background: rgba(255,255,255,0.6);
+  position: absolute;
+  right: 0;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
 }
 
 /* ── Menu backdrop ───────────────────────────────────────── */
 .hud-menu-backdrop {
-  position: fixed; inset: 0;
+  position: fixed;
+  inset: 0;
   z-index: 94;
   cursor: default;
 }
@@ -179,47 +261,57 @@ html, body, #root {
 /* Section dot nav */
 .hud-nav {
   position: absolute;
-  right: 32px; top: 50%;
+  right: 32px;
+  top: 50%;
   transform: translateY(-50%);
-  display: flex; flex-direction: column; gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   align-items: center;
   pointer-events: all;
 }
 
 .hud-dot {
-  width: 5px; height: 5px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.18);
+  background: rgba(255, 255, 255, 0.18);
   cursor: pointer;
   transition: background 0.4s ease, transform 0.4s ease;
   position: relative;
 }
 
 .hud-dot.active {
-  background: rgba(255,255,255,0.9);
+  background: rgba(255, 255, 255, 0.9);
   transform: scale(1.6);
 }
 
 /* No text labels on dots — minimal, uses only dot scale to indicate active */
-.hud-dot-label { display: none; }
+.hud-dot-label {
+  display: none;
+}
 
 .hud-counter {
   position: absolute;
-  bottom: 32px; left: 48px;
+  bottom: 32px;
+  left: 48px;
   font-family: var(--font-display);
   font-size: 10px;
   letter-spacing: 0.3em;
-  color: rgba(255,255,255,0.2);
+  color: rgba(255, 255, 255, 0.2);
 }
 
 /* Scroll hint arrow */
 .hud-hint {
   position: absolute;
-  bottom: 32px; right: 48px;
-  display: flex; align-items: center; gap: 10px;
+  bottom: 32px;
+  right: 48px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-size: 9px;
   letter-spacing: 0.3em;
-  color: rgba(255,255,255,0.18);
+  color: rgba(255, 255, 255, 0.18);
   font-family: var(--font-body);
 }
 
@@ -228,60 +320,88 @@ html, body, #root {
   position: fixed;
   pointer-events: none;
   z-index: 9999;
-  width: 360px; height: 360px;
+  width: 360px;
+  height: 360px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,255,0.018) 0%, transparent 60%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.018) 0%, transparent 60%);
   transform: translate(-50%, -50%);
   transition: left 0.09s linear, top 0.09s linear;
 }
 
 /* ── Scrollbar ──────────────────────────────────────────── */
-::-webkit-scrollbar { display: none; }
-* { scrollbar-width: none; }
+::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  scrollbar-width: none;
+}
 
 /* ── Social icons: slightly bigger + scale on hover ────── */
 .hud-social-btn {
   width: 18px !important;
   height: 18px !important;
 }
+
 .hud-social-btn:hover {
-  color: rgba(255,255,255,0.82) !important;
-  filter: drop-shadow(0 0 5px rgba(255,255,255,0.3)) !important;
+  color: rgba(255, 255, 255, 0.82) !important;
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3)) !important;
   transform: scale(1.18) !important;
 }
 
 /* ── Solar system orbit animations ─────────────────────── */
 @keyframes noviq-orbit {
-  from { transform: rotate(0deg);   }
-  to   { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
+
 @keyframes noviq-counter {
-  from { transform: rotate(0deg);    }
-  to   { transform: rotate(-360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(-360deg);
+  }
 }
+
 @keyframes noviq-core-pulse {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(255,255,255,0),
-                0 0 18px rgba(255,255,255,0.04);
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0),
+      0 0 18px rgba(255, 255, 255, 0.04);
   }
+
   50% {
-    box-shadow: 0 0 0 9px rgba(255,255,255,0.028),
-                0 0 42px rgba(255,255,255,0.10);
+    box-shadow: 0 0 0 9px rgba(255, 255, 255, 0.028),
+      0 0 42px rgba(255, 255, 255, 0.10);
   }
 }
+
 @keyframes noviq-ring-drift {
-  from { transform: rotate(0deg);   }
-  to   { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* ── Contact input focus glow ───────────────────────────── */
 .noviq-input {
   width: 100%;
   padding: 13px 18px;
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.07);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 8px;
-  color: rgba(255,255,255,0.82);
+  color: rgba(255, 255, 255, 0.82);
   font-family: var(--font-body);
   font-size: 11.5px;
   letter-spacing: 0.03em;
@@ -289,34 +409,56 @@ html, body, #root {
   box-sizing: border-box;
   transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
-.noviq-input::placeholder { color: rgba(255,255,255,0.2); }
+
+.noviq-input::placeholder {
+  color: rgba(255, 255, 255, 0.2);
+}
+
 .noviq-input:focus {
-  background: rgba(255,255,255,0.04);
-  border-color: rgba(255,255,255,0.18);
-  box-shadow: 0 0 0 1px rgba(255,255,255,0.05), 0 0 22px rgba(255,255,255,0.04);
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 0 22px rgba(255, 255, 255, 0.04);
 }
 
 /* ── Team card floating animation ─────────────────────── */
 @keyframes team-float {
-  0%, 100% { transform: translateY(0px);  }
-  50%       { transform: translateY(-4px); }
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
 }
 
 /* ── Center cat SVG breathing glow (no box element needed) ── */
 @keyframes noviq-cat-breath {
-  0%, 100% {
-    opacity: 0.65;
-    filter: brightness(0) invert(1) drop-shadow(0 0 2px rgba(255,255,255,0.12));
+
+  0%,
+  100% {
+    opacity: 1;
+    filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
   }
+
   50% {
-    opacity: 0.88;
-    filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(255,255,255,0.28));
+    opacity: 1;
+    filter: brightness(0) invert(1) drop-shadow(0 0 24px rgba(255, 255, 255, 0.9));
   }
 }
 
 /* ── Micro WOW flash for hero text reveal ── */
 @keyframes noviq-micro-flash {
-  0%   { opacity: 0; }
-  10%  { opacity: 0.75; }
-  100% { opacity: 0; }
+  0% {
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.75;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }

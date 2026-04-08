@@ -114,15 +114,23 @@ export function SystemCore({ section, introPhase }) {
             r2 * Math.sin(angle2) * Math.sin(TILT2)
           );
 
-          // ── s3 TEAM — Fibonacci sphere, tighter (smaller so cards stay readable) ─
-          const N = 4500;
-          const phi3   = Math.acos(-1 + (2 * idx) / N);
-          const theta3 = Math.sqrt(N * Math.PI) * phi3;
-          const r3 = 0.76;
+          // ── s3 TEAM — 5 Subtle Portrait Auras ─
+          // Bothering nothing: We divide the 4,500 pixels into 5 faint rectangular panes 
+          // that sit strictly and deeply in the Z-background directly behind each of the 5 CSS cards.
+          
+          const cardIdx = idx % 5; // 0, 1, 2(Center), 3, 4
+          
+          // Match the approximate CSS aspect ratio of the TeamCards (148x185)
+          const spanX = (Math.random() - 0.5) * 0.35; // Panel width
+          const spanY = (Math.random() - 0.5) * 0.50; // Panel height
+          
+          // X-offset mapping equivalent to css 'gap: 20px' 
+          const baseX = (cardIdx - 2) * 0.58; 
+          
           const s3 = new THREE.Vector3(
-            r3 * Math.cos(theta3) * Math.sin(phi3),
-            r3 * Math.sin(theta3) * Math.sin(phi3) + 0.18,
-            r3 * Math.cos(phi3) - 0.22
+            baseX + spanX,
+            -0.10 + spanY, // Offset slightly down so it sits precisely behind the CSS card
+            -1.25 // Pushed completely deep into the background so it never overlaps UI
           );
 
           // ── s4 CONTACT — Frame/Border around safe zone ─

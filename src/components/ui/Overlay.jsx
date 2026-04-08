@@ -6,8 +6,8 @@ import React, { useState } from 'react';
 function Fade({ show, delay = 0, children, style = {} }) {
   return (
     <div style={{
-      opacity:    show ? 1 : 0,
-      transform:  show ? 'translateY(0px) scale(1)' : 'translateY(12px) scale(0.96)',
+      opacity: show ? 1 : 0,
+      transform: show ? 'translateY(0px) scale(1)' : 'translateY(12px) scale(0.96)',
       transition: `opacity 0.9s ease ${delay}s, transform 0.95s cubic-bezier(0.2, 0.8, 0.2, 1) ${delay}s`,
       pointerEvents: show ? 'all' : 'none',
       ...style,
@@ -36,7 +36,7 @@ const Label = ({ children }) => (
 function LandingOverlay({ show }) {
   return (
     <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
-      
+
       {/* Micro WOW flash backdrop */}
       <div style={{
         position: 'absolute', inset: 0,
@@ -67,19 +67,20 @@ function LandingOverlay({ show }) {
           </div>
         </Fade>
 
-        {/* Hero headline — centered, premium impact */}
+        {/* Hero headline — centered, pure premium typography */}
         <h1 style={{
-          fontFamily: 'var(--font-display)',
-          fontSize: 'clamp(38px, 5.2vw, 68px)',
-          fontWeight: 900,
-          letterSpacing: '0.03em',
+          fontFamily: 'var(--font-hero)',
+          fontSize: 'clamp(36px, 5.5vw, 68px)',
+          fontWeight: 700,
+          letterSpacing: '0.08em',
+          textTransform: 'uppercase', // Syncopate looks sick in purely ALL CAPS
           color: '#ffffff',
           margin: 0,
           display: 'flex',
-          gap: '0.32em',
+          gap: '0.36em',
           justifyContent: 'center',
-          textShadow: '0 0 20px rgba(255,255,255,0.12)', // Minimal soft glow
-          WebkitTextStroke: '0.8px rgba(255,255,255,0.3)', // Thin stroke for clarity against background
+          textShadow: '0 0 20px rgba(255,255,255,0.08), 3px 5px 12px rgba(0,0,0,0.8), -2px -2px 0px rgba(0,0,0,0.8)',
+          WebkitTextStroke: '1.2px rgba(255,255,255,0.25)',
         }}>
           {["Building", "What's", "Next."].map((word, i) => (
             <Fade key={i} show={show} delay={0.45 + (i * 0.18)} style={{ display: 'inline-block' }}>
@@ -171,7 +172,7 @@ function AboutOverlay({ show }) {
               paddingTop: 18,
               borderTop: '1px solid rgba(255,255,255,0.05)',
             }}>
-              {[['2026','Founded'], ['12+','Builds'], ['5','Core Team']].map(([val, lbl], i) => (
+              {[['2026', 'Founded'], ['12+', 'Builds'], ['5', 'Core Team']].map(([val, lbl], i) => (
                 <div key={lbl} style={{
                   flex: 1,
                   paddingLeft: i > 0 ? 16 : 0,
@@ -195,11 +196,11 @@ function AboutOverlay({ show }) {
 // SERVICES  —  Solar system layout
 // ══════════════════════════════════════════════════════════════
 const SYSTEM_NODES = [
-  { n: '01', title: 'Custom\nSoftware',    sub: 'From idea to product',     r: 140, period: 22, startDeg: 0   },
-  { n: '02', title: 'ERP\nSolutions',      sub: 'Enterprise systems',        r: 178, period: 31, startDeg: 72  },
-  { n: '03', title: 'SaaS\nProducts',      sub: 'Subscription cloud apps',   r: 248, period: 40, startDeg: 148 },
-  { n: '04', title: 'IoT &\nAutomation',   sub: 'Connected devices & edge',  r: 199, period: 27, startDeg: 224 },
-  { n: '05', title: 'Hardware\nPrototype', sub: 'Embedded & PCB builds',     r: 225, period: 36, startDeg: 308 },
+  { n: '01', title: 'Custom\nSoftware', sub: 'From idea to product', r: 140, period: 22, startDeg: 0 },
+  { n: '02', title: 'ERP\nSolutions', sub: 'Enterprise systems', r: 178, period: 31, startDeg: 72 },
+  { n: '03', title: 'SaaS\nProducts', sub: 'Subscription cloud apps', r: 248, period: 40, startDeg: 148 },
+  { n: '04', title: 'IoT &\nAutomation', sub: 'Connected devices & edge', r: 199, period: 27, startDeg: 224 },
+  { n: '05', title: 'Hardware\nPrototype', sub: 'Embedded & PCB builds', r: 225, period: 36, startDeg: 308 },
 ];
 // Unique radii for orbit rings (deduplicated + sorted)
 const ORBIT_RINGS = [...new Set(SYSTEM_NODES.map(n => n.r))].sort((a, b) => a - b);
@@ -311,11 +312,11 @@ function OrbitNode({ node, show, isActive, isDimmed, onHoverStart, onHoverEnd })
 
 function ServicesOverlay({ show }) {
   const [activeNode, setActiveNode] = useState(null);
-  // Delayed core reveal — orbit rings appear first, cat emerges after 1.8s
+  // Delayed core reveal — wait exclusively for 3D circle pixels to finish settling
   const [showCore, setShowCore] = useState(false);
   React.useEffect(() => {
     if (show) {
-      const t = setTimeout(() => setShowCore(true), 1800);
+      const t = setTimeout(() => setShowCore(true), 2400);
       return () => clearTimeout(t);
     } else {
       setShowCore(false);
@@ -348,10 +349,10 @@ function ServicesOverlay({ show }) {
         pointerEvents: 'none',
       }} />
 
-      {/* System interface — positioned slightly above viewport center */}
+      {/* System interface — centered exactly */}
       <div style={{
         position: 'absolute',
-        top: 'calc(50% - 32px)', left: '50%',
+        top: '50%', left: '50%',
         width: 0, height: 0,
         opacity: show ? 1 : 0,
         transition: 'opacity 0.9s ease 0.2s',
@@ -390,10 +391,8 @@ function ServicesOverlay({ show }) {
               objectFit: 'contain',
               filter: 'brightness(0) invert(1)',
               opacity: showCore ? 1 : 0,
-              transform: showCore ? 'scale(1)' : 'scale(0.15)',
-              transition: 'opacity 1.2s cubic-bezier(0.34,1.56,0.64,1), transform 1.2s cubic-bezier(0.34,1.56,0.64,1)',
-              animation: showCore ? 'noviq-cat-breath 4.8s ease-in-out infinite' : 'none',
-              animationDelay: '0.5s',
+              transform: showCore ? 'scale(1)' : 'scale(0.85)',
+              transition: 'opacity 0.4s ease, transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)',
             }}
           />
         </div>
@@ -424,16 +423,16 @@ function ServicesOverlay({ show }) {
           <button
             onClick={() => window.dispatchEvent(new CustomEvent('noviq-goto', { detail: 4 }))}
             onMouseEnter={e => {
-              e.currentTarget.style.transform    = 'translateX(-50%) scale(1.06)';
-              e.currentTarget.style.borderColor  = 'rgba(255,255,255,0.3)';
-              e.currentTarget.style.boxShadow    = '0 0 22px rgba(255,255,255,0.09)';
-              e.currentTarget.style.color        = 'rgba(255,255,255,0.95)';
+              e.currentTarget.style.transform = 'translateX(-50%) scale(1.06)';
+              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)';
+              e.currentTarget.style.boxShadow = '0 0 22px rgba(255,255,255,0.09)';
+              e.currentTarget.style.color = 'rgba(255,255,255,0.95)';
             }}
             onMouseLeave={e => {
-              e.currentTarget.style.transform    = 'translateX(-50%) scale(1)';
-              e.currentTarget.style.borderColor  = 'rgba(255,255,255,0.14)';
-              e.currentTarget.style.boxShadow    = 'none';
-              e.currentTarget.style.color        = 'rgba(255,255,255,0.55)';
+              e.currentTarget.style.transform = 'translateX(-50%) scale(1)';
+              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.14)';
+              e.currentTarget.style.boxShadow = 'none';
+              e.currentTarget.style.color = 'rgba(255,255,255,0.55)';
             }}
             style={{
               position: 'relative',
@@ -463,11 +462,11 @@ function ServicesOverlay({ show }) {
 // TEAM  —  real B&W photo cards, premium founder layout
 // ══════════════════════════════════════════════════════════════
 const MEMBERS = [
-  { name: 'Harikrishnan J', shortName: 'Hari',   title: 'Founder & CEO',       role: 'CEO',  desc: 'Visionary & engineering lead',    img: 'hari.jpg'   },
-  { name: 'Thomas Joseph',  shortName: 'Thomas', title: 'Co-Founder & CCO',    role: 'CCO',  desc: 'Client relations & strategy',     img: 'thomas.jpg' },
-  { name: 'Aeljin Mathews', shortName: 'Aeljin', title: 'Co-Founder & COO',    role: 'COO',  desc: 'Operations & product direction',  img: 'aeljin.jpg' },
-  { name: 'Febin Jince',    shortName: 'Febin',  title: 'Co-Founder & CFO',    role: 'CFO',  desc: 'Finance & business development',  img: 'febin.jpg'  },
-  { name: 'Joe Jose',       shortName: 'Joe',    title: 'CTO',                  role: 'CTO',  desc: 'Hardware & embedded systems',     img: 'joe.jpg'    },
+  { name: 'Thomas Joseph', shortName: 'Thomas', title: 'Co-Founder & CCO', role: 'CCO', desc: 'Client relations & strategy', img: 'thomas.jpg' },
+  { name: 'Aeljin Mathews', shortName: 'Aeljin', title: 'Co-Founder & COO', role: 'COO', desc: 'Operations & product direction', img: 'aeljin.jpg' },
+  { name: 'Harikrishnan J', shortName: 'Hari', title: 'Founder & CEO', role: 'CEO', desc: 'Visionary & engineering lead', img: 'hari.jpg' },
+  { name: 'Febin Jince', shortName: 'Febin', title: 'Co-Founder & CFO', role: 'CFO', desc: 'Finance & business development', img: 'febin.jpg' },
+  { name: 'Joe Jose', shortName: 'Joe', title: 'CTO', role: 'CTO', desc: 'Hardware & embedded systems', img: 'joe.jpg' },
 ];
 
 function TeamCard({ member, idx, show }) {
@@ -507,15 +506,15 @@ function TeamCard({ member, idx, show }) {
       }}>
         {/* B&W photo */}
         <img
-          src={`/assets/team/${member.img}`}
+          src={`/assets/team/${member.img}?v=3`}
           alt={member.name}
           style={{
             width: '100%', height: '100%',
             objectFit: 'cover',
-            objectPosition: 'top center',
+            objectPosition: member.shortName === 'Hari' ? 'center 35%' : 'top center',
             filter: hovered
-              ? 'grayscale(100%) contrast(1.08) brightness(0.78)'
-              : 'grayscale(100%) contrast(1.10) brightness(0.88)',
+              ? 'grayscale(100%) contrast(1.15) brightness(0.85)'
+              : 'grayscale(100%) contrast(1.20) brightness(0.95)',
             transform: hovered ? 'scale(1.07)' : 'scale(1)',
             transition: 'transform 0.48s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.4s ease',
             display: 'block',
@@ -568,21 +567,25 @@ function TeamCard({ member, idx, show }) {
         }} />
       </div>
 
-      {/* Name + title below card */}
+      {/* Name + title below card — High visibility strokes and shadows */}
       <div style={{ marginTop: 11, textAlign: 'center' }}>
         <div style={{
           fontFamily: 'var(--font-display)',
           fontSize: 9.5, fontWeight: 700,
           letterSpacing: '0.06em',
-          color: `rgba(255,255,255,${hovered ? 0.92 : 0.72})`,
+          color: `rgba(255,255,255,${hovered ? 0.98 : 0.85})`, // Brighter white
           transition: 'color 0.35s ease',
+          WebkitTextStroke: '0.5px rgba(0,0,0,0.8)', // Distinct black border
+          textShadow: '0 2px 8px rgba(0,0,0,0.9), 0 0 12px rgba(0,0,0,0.8)', // Deep shadow to separate from any particles
         }}>{member.shortName}</div>
         <div style={{
           fontFamily: 'var(--font-body)',
           fontSize: 7.5, letterSpacing: '0.15em',
-          color: 'rgba(255,255,255,0.28)',
+          color: 'rgba(255,255,255,0.4)',
           marginTop: 3,
           textTransform: 'uppercase',
+          WebkitTextStroke: '0.3px rgba(0,0,0,0.8)',
+          textShadow: '0 1px 4px rgba(0,0,0,0.9)',
         }}>{member.title}</div>
       </div>
     </div>
@@ -710,14 +713,14 @@ function ContactOverlay({ show }) {
             }}
             onMouseEnter={e => {
               if (!email.trim()) return;
-              e.currentTarget.style.background    = 'rgba(255,255,255,0.14)';
-              e.currentTarget.style.borderColor   = 'rgba(255,255,255,0.24)';
-              e.currentTarget.style.boxShadow     = '0 0 24px rgba(255,255,255,0.07)';
+              e.currentTarget.style.background = 'rgba(255,255,255,0.14)';
+              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.24)';
+              e.currentTarget.style.boxShadow = '0 0 24px rgba(255,255,255,0.07)';
             }}
             onMouseLeave={e => {
-              e.currentTarget.style.background  = email.trim() ? 'rgba(255,255,255,0.09)' : 'rgba(255,255,255,0.03)';
+              e.currentTarget.style.background = email.trim() ? 'rgba(255,255,255,0.09)' : 'rgba(255,255,255,0.03)';
               e.currentTarget.style.borderColor = email.trim() ? 'rgba(255,255,255,0.16)' : 'rgba(255,255,255,0.06)';
-              e.currentTarget.style.boxShadow   = 'none';
+              e.currentTarget.style.boxShadow = 'none';
             }}
           >
             Request a Call
@@ -770,11 +773,11 @@ function ContactOverlay({ show }) {
 export function Overlay({ section }) {
   return (
     <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 10 }}>
-      <LandingOverlay  show={section === 0} />
-      <AboutOverlay    show={section === 1} />
+      <LandingOverlay show={section === 0} />
+      <AboutOverlay show={section === 1} />
       <ServicesOverlay show={section === 2} />
-      <TeamOverlay     show={section === 3} />
-      <ContactOverlay  show={section === 4} />
+      <TeamOverlay show={section === 3} />
+      <ContactOverlay show={section === 4} />
     </div>
   );
 }
